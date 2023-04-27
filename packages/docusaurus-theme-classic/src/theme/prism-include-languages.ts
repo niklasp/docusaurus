@@ -28,6 +28,6 @@ export default function prismIncludeLanguages(
     // eslint-disable-next-line global-require, import/no-dynamic-require
     require(`prismjs/components/prism-${lang}`);
   });
-
+  // @ts-ignore
   delete (globalThis as Global & {Prism?: typeof PrismNamespace}).Prism;
 }

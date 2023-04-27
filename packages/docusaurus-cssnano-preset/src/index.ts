@@ -9,7 +9,7 @@ import advancedBasePreset from 'cssnano-preset-advanced';
 import postCssSortMediaQueries from 'postcss-sort-media-queries';
 import postCssRemoveOverriddenCustomProperties from './remove-overridden-custom-properties';
 
-const preset: typeof advancedBasePreset = function preset(opts) {
+const preset: typeof advancedBasePreset = function preset(opts) :any {
   const advancedPreset = advancedBasePreset({
     autoprefixer: {add: false},
     discardComments: {removeAll: true},
