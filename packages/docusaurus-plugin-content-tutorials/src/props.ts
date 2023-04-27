@@ -28,7 +28,7 @@ import type {
 } from '@niklasp/plugin-content-tutorials';
 
 export function toSidebarsProp(loadedVersion: LoadedVersion): PropSidebars {
-  const docsById = createDocsByIdIndex(loadedVersion.docs);
+  const docsById = createDocsByIdIndex(loadedVersion.tutorials);
 
   function getDocById(docId: string): DocMetadata {
     const docMetadata = docsById[docId];
@@ -56,7 +56,7 @@ Available document ids are:
       className: item.className,
       customProps:
         item.customProps ?? docMetadata.frontMatter.sidebar_custom_props,
-      docId: docMetadata.unversionedId,
+      tutorialId: docMetadata.unversionedId,
     };
   };
 
@@ -64,7 +64,7 @@ Available document ids are:
     link: SidebarItemCategoryLink | undefined,
   ): string | undefined {
     switch (link?.type) {
-      case 'doc':
+      case 'tutorial':
         return getDocById(link.id).permalink;
       case 'generated-index':
         return link.permalink;
@@ -77,7 +77,7 @@ Available document ids are:
     link: SidebarItemCategoryLink | undefined,
   ) {
     switch (link?.type) {
-      case 'doc':
+      case 'tutorial':
         return getDocById(link.id).frontMatter.sidebar_custom_props;
       default:
         return undefined;
@@ -102,7 +102,7 @@ Available document ids are:
       case 'category':
         return convertCategory(item);
       case 'ref':
-      case 'doc':
+      case 'tutorial':
         return convertDocLink(item);
       case 'link':
       default:
@@ -120,13 +120,13 @@ Available document ids are:
 
 function toVersionDocsProp(loadedVersion: LoadedVersion): PropVersionDocs {
   return Object.fromEntries(
-    loadedVersion.docs.map((doc) => [
-      doc.unversionedId,
+    loadedVersion.tutorials.map((tutorial) => [
+      tutorial.unversionedId,
       {
-        id: doc.unversionedId,
-        title: doc.title,
-        description: doc.description,
-        sidebar: doc.sidebar,
+        id: tutorial.unversionedId,
+        title: tutorial.title,
+        description: tutorial.description,
+        sidebar: tutorial.sidebar,
       },
     ]),
   );
@@ -146,22 +146,22 @@ export function toVersionMetadataProp(
     className: loadedVersion.className,
     isLast: loadedVersion.isLast,
     docsSidebars: toSidebarsProp(loadedVersion),
-    docs: toVersionDocsProp(loadedVersion),
+    tutorials: toVersionDocsProp(loadedVersion),
   };
 }
 
 export function toTagDocListProp({
   allTagsPath,
   tag,
-  docs,
+  tutorials,
 }: {
   allTagsPath: string;
   tag: VersionTag;
-  docs: DocMetadata[];
+  tutorials: DocMetadata[];
 }): PropTagDocList {
   function toDocListProp(): PropTagDocListDoc[] {
     const list = _.compact(
-      tag.docIds.map((id) => docs.find((doc) => doc.id === id)),
+      tag.tutorialIds.map((id) => tutorials.find((doc:any) => doc.id === id)),
     );
     // Sort docs by title
     list.sort((doc1, doc2) => doc1.title.localeCompare(doc2.title));
@@ -177,7 +177,7 @@ export function toTagDocListProp({
     label: tag.label,
     permalink: tag.permalink,
     allTagsPath,
-    count: tag.docIds.length,
+    count: tag.tutorialIds.length,
     items: toDocListProp(),
   };
 }

@@ -21,7 +21,7 @@ describe('loadSidebars', () => {
   const params: SidebarProcessorParams = {
     sidebarItemsGenerator: DefaultSidebarItemsGenerator,
     numberPrefixParser: (filename) => ({filename}),
-    docs: [
+    tutorials: [
       {
         source: '@site/docs/foo/bar.md',
         sourceDirName: 'foo',
@@ -133,7 +133,7 @@ describe('loadSidebars', () => {
     const sidebarPath = path.join(fixtureDir, 'sidebars-category-index.json');
     const result = await loadSidebars(sidebarPath, {
       ...params,
-      docs: [
+      tutorials: [
         {
           id: 'tutorials/tutorial-basics',
           source: '@site/docs/tutorials/tutorial-basics/index.md',

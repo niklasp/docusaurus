@@ -10,11 +10,11 @@ import {groupTaggedItems} from '@docusaurus/utils';
 import type {VersionTags} from './types';
 import type {DocMetadata} from '@niklasp/plugin-content-tutorials';
 
-export function getVersionTags(docs: DocMetadata[]): VersionTags {
-  const groups = groupTaggedItems(docs, (doc) => doc.tags);
+export function getVersionTags(tutorials: DocMetadata[]): VersionTags {
+  const groups = groupTaggedItems(tutorials, (tutorial) => tutorial.tags);
   return _.mapValues(groups, (group) => ({
     label: group.tag.label,
-    docIds: group.items.map((item) => item.id),
+    tutorialIds: group.items.map((item) => item.id),
     permalink: group.tag.permalink,
   }));
 }

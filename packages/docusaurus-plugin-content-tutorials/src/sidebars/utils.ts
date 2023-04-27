@@ -71,7 +71,7 @@ function collectSidebarItemsOfType<
 }
 
 export function collectSidebarDocItems(sidebar: Sidebar): SidebarItemDoc[] {
-  return collectSidebarItemsOfType('doc', sidebar);
+  return collectSidebarItemsOfType('tutorial', sidebar);
 }
 export function collectSidebarCategories(
   sidebar: Sidebar,
@@ -89,9 +89,9 @@ export function collectSidebarRefs(sidebar: Sidebar): SidebarItemDoc[] {
 export function collectSidebarDocIds(sidebar: Sidebar): string[] {
   return flattenSidebarItems(sidebar).flatMap((item) => {
     if (item.type === 'category') {
-      return item.link?.type === 'doc' ? [item.link.id] : [];
+      return item.link?.type === 'tutorial' ? [item.link.id] : [];
     }
-    if (item.type === 'doc') {
+    if (item.type === 'tutorial') {
       return [item.id];
     }
     return [];
@@ -105,7 +105,7 @@ export function collectSidebarNavigation(
     if (item.type === 'category' && item.link) {
       return [item as SidebarNavigationItem];
     }
-    if (item.type === 'doc') {
+    if (item.type === 'tutorial') {
       return [item];
     }
     return [];
@@ -151,7 +151,7 @@ export type SidebarsUtils = {
    */
   getFirstLink: (sidebarId: string) =>
     | {
-        type: 'doc';
+        type: 'tutorial';
         id: string;
         label: string;
       }
@@ -218,10 +218,10 @@ export function createSidebarsUtils(sidebars: Sidebars): SidebarsUtils {
       );
     }
     const currentItemIndex = navigationItems.findIndex((item) => {
-      if (item.type === 'doc') {
+      if (item.type === 'tutorial') {
         return item.id === docId;
       }
-      if (item.type === 'category' && item.link.type === 'doc') {
+      if (item.type === 'category' && item.link.type === 'tutorial') {
         return item.link.id === docId;
       }
       return false;
@@ -299,7 +299,7 @@ Available document ids are:
 
   function getFirstLink(sidebar: Sidebar):
     | {
-        type: 'doc';
+        type: 'tutorial';
         id: string;
         label: string;
       }
@@ -310,16 +310,16 @@ Available document ids are:
       }
     | undefined {
     for (const item of sidebar) {
-      if (item.type === 'doc') {
+      if (item.type === 'tutorial') {
         return {
-          type: 'doc',
+          type: 'tutorial',
           id: item.id,
           label: item.label ?? item.id,
         };
       } else if (item.type === 'category') {
-        if (item.link?.type === 'doc') {
+        if (item.link?.type === 'tutorial') {
           return {
-            type: 'doc',
+            type: 'tutorial',
             id: item.link.id,
             label: item.label,
           };
@@ -382,7 +382,7 @@ export function toNavigationLink(
   }
 
   if (navigationItem.type === 'category') {
-    return navigationItem.link.type === 'doc'
+    return navigationItem.link.type === 'tutorial'
       ? toDocNavigationLink(getDocById(navigationItem.link.id))
       : {
           title: navigationItem.label,

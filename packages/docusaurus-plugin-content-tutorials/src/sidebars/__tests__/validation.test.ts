@@ -45,7 +45,7 @@ describe('validateSidebars', () => {
     expect(
       () =>
         validateSidebars({
-          docs: [
+          tutorials: [
             {
               type: 'category',
               label: true,
@@ -74,7 +74,7 @@ describe('validateSidebars', () => {
   it('sidebars link wrong label', () => {
     expect(() =>
       validateSidebars({
-        docs: [
+        tutorials: [
           {
             type: 'link',
             label: false,
@@ -96,7 +96,7 @@ describe('validateSidebars', () => {
   it('sidebars link wrong href', () => {
     expect(() =>
       validateSidebars({
-        docs: [
+        tutorials: [
           {
             type: 'link',
             label: 'GitHub',
@@ -120,7 +120,7 @@ describe('validateSidebars', () => {
   it('sidebars with unknown sidebar item type', () => {
     expect(() =>
       validateSidebars({
-        docs: [
+        tutorials: [
           {
             type: 'superman',
           },
@@ -139,7 +139,7 @@ describe('validateSidebars', () => {
   it('sidebars category missing items', () => {
     expect(() =>
       validateSidebars({
-        docs: [
+        tutorials: [
           {
             type: 'category',
             label: 'category',
@@ -165,7 +165,7 @@ describe('validateSidebars', () => {
   it('sidebars category wrong field', () => {
     expect(() =>
       validateSidebars({
-        docs: [
+        tutorials: [
           {
             type: 'category',
             label: 'category',
@@ -194,7 +194,7 @@ describe('validateSidebars', () => {
   it('sidebar category wrong items', () => {
     expect(() =>
       validateSidebars({
-        docs: {
+        tutorials: {
           Test: [
             {
               type: 'category',
@@ -210,7 +210,7 @@ describe('validateSidebars', () => {
   it('sidebars item doc but id is not a string', () => {
     expect(() =>
       validateSidebars({
-        docs: [
+        tutorials: [
           {
             type: 'doc',
             id: ['doc1'],

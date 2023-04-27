@@ -18,7 +18,7 @@ describe('toTagDocListProp', () => {
     const tag: Tag = {
       label: 'tag1',
       permalink: '/tag1',
-      docIds: ['id1', 'id3'],
+      tutorialIds: ['id1', 'id3'],
     };
 
     const doc1 = {
@@ -49,7 +49,7 @@ describe('toTagDocListProp', () => {
     const result = toTagDocListProp({
       allTagsPath,
       tag,
-      docs: [doc1, doc2, doc3, doc4],
+      tutorials: [doc1, doc2, doc3, doc4],
     });
 
     expect(result).toEqual({

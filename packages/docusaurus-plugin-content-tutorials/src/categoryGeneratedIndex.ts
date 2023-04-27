@@ -40,13 +40,13 @@ function getCategoryGeneratedIndexMetadata({
 }
 
 export function getCategoryGeneratedIndexMetadataList({
-  docs,
+  tutorials,
   sidebarsUtils,
 }: {
   sidebarsUtils: SidebarsUtils;
-  docs: DocMetadataBase[];
+  tutorials: DocMetadataBase[];
 }): CategoryGeneratedIndexMetadata[] {
-  const docsById = createDocsByIdIndex(docs);
+  const docsById = createDocsByIdIndex(tutorials);
 
   const categoryGeneratedIndexItems =
     sidebarsUtils.getCategoryGeneratedIndexList();

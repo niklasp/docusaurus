@@ -47,7 +47,7 @@ export type GlobalVersion = {
   path: string;
   /** The doc with `slug: /`, or first doc in first sidebar */
   mainDocId: string;
-  docs: GlobalDoc[];
+  tutorials: GlobalDoc[];
   /** Unversioned IDs. In development, this list is empty. */
   draftIds: string[];
   sidebars?: {[sidebarId: string]: GlobalSidebar};

@@ -24,7 +24,7 @@ export type SidebarItemBase = {
 };
 
 export type SidebarItemDoc = SidebarItemBase & {
-  type: 'doc' | 'ref';
+  type: 'tutorial' | 'ref';
   label?: string;
   id: string;
   /**
@@ -61,7 +61,7 @@ type SidebarItemCategoryBase = SidebarItemBase & {
   description?: string;
 };
 
-export type SidebarItemCategoryLinkDoc = {type: 'doc'; id: string};
+export type SidebarItemCategoryLinkDoc = {type: 'tutorial'; id: string};
 
 export type SidebarItemCategoryLinkGeneratedIndexConfig = {
   type: 'generated-index';
@@ -189,7 +189,7 @@ export type PropSidebarItemCategory = Expand<
 >;
 
 export type PropSidebarItemLink = SidebarItemLink & {
-  docId?: string;
+  tutorialId?: string;
 };
 
 export type PropSidebarItemHtml = SidebarItemHtml;
@@ -246,7 +246,7 @@ export type SidebarItemsGeneratorArgs = {
   /** Useful metadata for the version this sidebar belongs to. */
   version: SidebarItemsGeneratorVersion;
   /** All the docs of that version (unfiltered). */
-  docs: SidebarItemsGeneratorDoc[];
+  tutorials: SidebarItemsGeneratorDoc[];
   /** Number prefix parser configured for this plugin. */
   numberPrefixParser: NumberPrefixParser;
   /** The default category index matcher which you can override. */
@@ -275,7 +275,7 @@ export type SidebarItemsGeneratorOption = (
 export type SidebarProcessorParams = {
   sidebarItemsGenerator: SidebarItemsGeneratorOption;
   numberPrefixParser: NumberPrefixParser;
-  docs: DocMetadataBase[];
+  tutorials: DocMetadataBase[];
   drafts: DocMetadataBase[];
   version: VersionMetadata;
   categoryLabelSlugger: Slugger;

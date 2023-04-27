@@ -163,7 +163,7 @@ function createTestUtils({
       sidebarItemsGenerator: ({defaultSidebarItemsGenerator, ...args}) =>
         defaultSidebarItemsGenerator({...args}),
       numberPrefixParser: options.numberPrefixParser,
-      docs: rawDocs,
+      tutorials: rawDocs,
       drafts: [],
       version: versionMetadata,
       sidebarOptions: {

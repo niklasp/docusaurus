@@ -55,11 +55,11 @@ async function processSidebar(
   categoriesMetadata: {[filePath: string]: CategoryMetadataFile},
   params: SidebarProcessorParams,
 ): Promise<ProcessedSidebar> {
-  const {sidebarItemsGenerator, numberPrefixParser, docs, version} = params;
+  const {sidebarItemsGenerator, numberPrefixParser, tutorials, version} = params;
 
   // Just a minor lazy transformation optimization
   const getSidebarItemsGeneratorDocsAndVersion = _.memoize(() => ({
-    docs: docs.map(toSidebarItemsGeneratorDoc),
+    tutorials: tutorials.map(toSidebarItemsGeneratorDoc),
     version: toSidebarItemsGeneratorVersion(version),
   }));
 

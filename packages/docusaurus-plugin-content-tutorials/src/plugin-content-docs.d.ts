@@ -514,7 +514,7 @@ declare module '@niklasp/plugin-content-tutorials' {
     /** Sidebars contained in this version. */
     docsSidebars: PropSidebars;
     /** Docs contained in this version. */
-    docs: PropVersionDocs;
+    tutorials: PropVersionDocs;
   };
 
   export type PropCategoryGeneratedIndex = Omit<
@@ -545,7 +545,7 @@ declare module '@niklasp/plugin-content-tutorials' {
   };
 
   export type LoadedVersion = VersionMetadata & {
-    docs: DocMetadata[];
+    tutorials: DocMetadata[];
     drafts: DocMetadata[];
     sidebars: import('./sidebars/types').Sidebars;
   };

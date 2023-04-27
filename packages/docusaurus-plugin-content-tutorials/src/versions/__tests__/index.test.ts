@@ -169,7 +169,7 @@ describe('readVersionsMetadata', () => {
           context: defaultContext,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `"Docs: using "disableVersioning: true" option on a non-versioned site does not make sense."`,
+        `"tutorials: using "disableVersioning: true" option on a non-versioned site does not make sense."`,
       );
     });
 

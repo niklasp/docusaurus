@@ -337,7 +337,7 @@ export function addDocNavigation(
   docsBase: DocMetadataBase[],
   sidebarsUtils: SidebarsUtils,
   sidebarFilePath: string,
-): LoadedVersion['docs'] {
+): LoadedVersion['tutorials'] {
   const docsById = createDocsByIdIndex(docsBase);
 
   sidebarsUtils.checkSidebarsDocIds(
@@ -396,26 +396,26 @@ export function addDocNavigation(
  * - a random doc (if no docs are in any sidebar... edge case)
  */
 export function getMainDocId({
-  docs,
+  tutorials,
   sidebarsUtils,
 }: {
-  docs: DocMetadataBase[];
+  tutorials: DocMetadataBase[];
   sidebarsUtils: SidebarsUtils;
 }): string {
   function getMainDoc(): DocMetadata {
-    const versionHomeDoc = docs.find((doc) => doc.slug === '/');
+    const versionHomeDoc = tutorials.find((doc) => doc.slug === '/');
     const firstDocIdOfFirstSidebar =
       sidebarsUtils.getFirstDocIdOfFirstSidebar();
     if (versionHomeDoc) {
       return versionHomeDoc;
     } else if (firstDocIdOfFirstSidebar) {
-      return docs.find(
+      return tutorials.find(
         (doc) =>
           doc.id === firstDocIdOfFirstSidebar ||
           doc.unversionedId === firstDocIdOfFirstSidebar,
       )!;
     }
-    return docs[0]!;
+    return tutorials[0]!;
   }
 
   return getMainDoc().unversionedId;

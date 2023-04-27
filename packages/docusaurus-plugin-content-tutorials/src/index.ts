@@ -111,7 +111,7 @@ export default async function pluginContentTutorials(
     getPathsToWatch() {
       function getVersionPathsToWatch(version: VersionMetadata): string[] {
         const result = [
-          ...options.include.flatMap((pattern) =>
+          ...options.include.flatMap((pattern:any) =>
             getContentPathList(version).map(
               (docsDirPath) => `${docsDirPath}/${pattern}`,
             ),
@@ -161,12 +161,12 @@ export default async function pluginContentTutorials(
           versionMetadata,
         );
 
-        const [drafts, docs] = _.partition(docsBase, (doc) => doc.draft);
+        const [drafts, tutorials] = _.partition(docsBase, (tutorial) => tutorial.draft);
 
         const sidebars = await loadSidebars(versionMetadata.sidebarFilePath, {
           sidebarItemsGenerator: options.sidebarItemsGenerator,
           numberPrefixParser: options.numberPrefixParser,
-          docs,
+          tutorials,
           drafts,
           version: versionMetadata,
           sidebarOptions: {
@@ -180,8 +180,8 @@ export default async function pluginContentTutorials(
 
         return {
           ...versionMetadata,
-          docs: addDocNavigation(
-            docs,
+          tutorials: addDocNavigation(
+            tutorials,
             sidebarsUtils,
             versionMetadata.sidebarFilePath as string,
           ),
@@ -217,20 +217,20 @@ export default async function pluginContentTutorials(
         breadcrumbs,
       } = options;
       const {addRoute, createData, setGlobalData} = actions;
-      const versions: FullVersion[] = loadedVersions.map((version) => {
+      const versions: FullVersion[] = loadedVersions.map((version:any) => {
         const sidebarsUtils = createSidebarsUtils(version.sidebars);
         return {
           ...version,
           sidebarsUtils,
           categoryGeneratedIndices: getCategoryGeneratedIndexMetadataList({
-            docs: version.docs,
+            tutorials: version.tutorials,
             sidebarsUtils,
           }),
         };
       });
 
       async function createVersionTagsRoutes(version: FullVersion) {
-        const versionTags = getVersionTags(version.docs);
+        const versionTags = getVersionTags(version.tutorials);
 
         // TODO tags should be a sub route of the version route
         async function createTagsListPage() {
@@ -239,7 +239,7 @@ export default async function pluginContentTutorials(
           ).map((tagValue) => ({
             label: tagValue.label,
             permalink: tagValue.permalink,
-            count: tagValue.docIds.length,
+            count: tagValue.tutorialIds.length,
           }));
 
           // Only create /tags page if there are tags.
@@ -264,7 +264,7 @@ export default async function pluginContentTutorials(
           const tagProps = toTagDocListProp({
             allTagsPath: version.tagsPath,
             tag,
-            docs: version.docs,
+            tutorials: version.tutorials,
           });
           const tagPropPath = await createData(
             `${docuHash(`tag-${tag.permalink}`)}.json`,
@@ -318,7 +318,7 @@ export default async function pluginContentTutorials(
       } = options;
 
       function getSourceToPermalink(): SourceToPermalink {
-        const allDocs = content.loadedVersions.flatMap((v) => v.docs);
+        const allDocs = content.loadedVersions.flatMap((v) => v.tutorials);
         return Object.fromEntries(
           allDocs.map(({source, permalink}) => [source, permalink]),
         );

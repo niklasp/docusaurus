@@ -105,7 +105,7 @@ describe('docsClientUtils', () => {
         label: 'version1',
         path: '/???',
         isLast: false,
-        docs: [],
+        tutorials: [],
         mainDocId: '???',
         draftIds: [],
       },
@@ -114,7 +114,7 @@ describe('docsClientUtils', () => {
         label: 'version2',
         path: '/???',
         isLast: true,
-        docs: [],
+        tutorials: [],
         mainDocId: '???',
         draftIds: [],
       },
@@ -123,7 +123,7 @@ describe('docsClientUtils', () => {
         label: 'version3',
         path: '/???',
         isLast: false,
-        docs: [],
+        tutorials: [],
         mainDocId: '???',
         draftIds: [],
       },
@@ -147,7 +147,7 @@ describe('docsClientUtils', () => {
           label: 'next',
           isLast: false,
           path: '/docs/next',
-          docs: [],
+          tutorials: [],
           mainDocId: '???',
           draftIds: [],
         },
@@ -156,7 +156,7 @@ describe('docsClientUtils', () => {
           label: 'version2',
           isLast: true,
           path: '/docs',
-          docs: [],
+          tutorials: [],
           mainDocId: '???',
           draftIds: [],
         },
@@ -165,7 +165,7 @@ describe('docsClientUtils', () => {
           label: 'version1',
           isLast: false,
           path: '/docs/version1',
-          docs: [],
+          tutorials: [],
           mainDocId: '???',
           draftIds: [],
         },
@@ -197,7 +197,7 @@ describe('docsClientUtils', () => {
       path: '/docs/next',
       isLast: false,
       mainDocId: 'doc1',
-      docs: [
+      tutorials: [
         {
           id: 'doc1',
           path: '/docs/next/',
@@ -216,7 +216,7 @@ describe('docsClientUtils', () => {
       isLast: true,
       path: '/docs',
       mainDocId: 'doc1',
-      docs: [
+      tutorials: [
         {
           id: 'doc1',
           path: '/docs/',
@@ -235,7 +235,7 @@ describe('docsClientUtils', () => {
       path: '/docs/version1',
       isLast: false,
       mainDocId: 'doc1',
-      docs: [
+      tutorials: [
         {
           id: 'doc1',
           path: '/docs/version1/',
@@ -330,7 +330,7 @@ describe('docsClientUtils', () => {
       isLast: false,
       path: '/docs/next',
       mainDocId: 'doc1',
-      docs: [
+      tutorials: [
         {
           id: 'doc1',
           path: '/docs/next/',
@@ -349,7 +349,7 @@ describe('docsClientUtils', () => {
       path: '/docs',
       isLast: true,
       mainDocId: 'doc1',
-      docs: [
+      tutorials: [
         {
           id: 'doc1',
           path: '/docs/',
@@ -368,7 +368,7 @@ describe('docsClientUtils', () => {
       isLast: false,
       path: '/docs/version1',
       mainDocId: 'doc1',
-      docs: [
+      tutorials: [
         {
           id: 'doc1',
           path: '/docs/version1/',

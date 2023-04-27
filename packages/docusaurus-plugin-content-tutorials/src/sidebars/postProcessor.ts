@@ -26,7 +26,7 @@ function normalizeCategoryLink(
   category: ProcessedSidebarItemCategory,
   params: SidebarPostProcessorParams,
 ): SidebarItemCategoryLink | undefined {
-  if (category.link?.type === 'doc' && params.draftIds.has(category.link.id)) {
+  if (category.link?.type === 'tutorial' && params.draftIds.has(category.link.id)) {
     return undefined;
   }
   if (category.link?.type === 'generated-index') {
@@ -78,7 +78,7 @@ function postProcessSidebarItem(
         return null;
       }
       return {
-        type: 'doc',
+        type: 'tutorial',
         label: category.label,
         id: category.link.id,
       };
@@ -90,7 +90,7 @@ function postProcessSidebarItem(
     return category;
   }
   if (
-    (item.type === 'doc' || item.type === 'ref') &&
+    (item.type === 'tutorial' || item.type === 'ref') &&
     params.draftIds.has(item.id)
   ) {
     return null;

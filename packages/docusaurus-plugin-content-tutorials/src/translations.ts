@@ -183,7 +183,7 @@ function translateSidebar({
             ?.message ?? item.label,
       };
     }
-    if ((item.type === 'doc' || item.type === 'ref') && item.translatable) {
+    if ((item.type === 'tutorial' || item.type === 'ref') && item.translatable) {
       return {
         ...item,
         label:

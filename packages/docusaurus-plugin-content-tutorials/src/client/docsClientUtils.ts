@@ -85,10 +85,10 @@ export function getActiveDocContext(
   pathname: string,
 ): ActiveDocContext {
   const activeVersion = getActiveVersion(data, pathname);
-  const activeDoc = activeVersion?.docs.find(
-    (doc) =>
+  const activeDoc = activeVersion?.tutorials.find(
+    (tutorial) =>
       !!matchPath(pathname, {
-        path: doc.path,
+        path: tutorial.path,
         exact: true,
         strict: false,
       }),
@@ -99,9 +99,9 @@ export function getActiveDocContext(
   ): ActiveDocContext['alternateDocVersions'] {
     const result: ActiveDocContext['alternateDocVersions'] = {};
     data.versions.forEach((version) => {
-      version.docs.forEach((doc) => {
-        if (doc.id === docId) {
-          result[version.name] = doc;
+      version.tutorials.forEach((tutorial) => {
+        if (tutorial.id === docId) {
+          result[version.name] = tutorial;
         }
       });
     });

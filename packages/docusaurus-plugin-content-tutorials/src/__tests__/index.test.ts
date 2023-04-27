@@ -812,7 +812,7 @@ describe('site with custom sidebar items generator', () => {
     ): Parameters<SidebarItemsGeneratorOption>[0] {
       return {
         ...arg,
-        docs: _.orderBy(arg.docs, 'id'),
+        tutorials: _.orderBy(arg.docs, 'id'),
         version: {
           ...arg.version,
           contentPath: path.relative(siteDir, arg.version.contentPath),

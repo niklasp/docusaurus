@@ -57,7 +57,7 @@ function createSampleVersion(
     badge: true,
     className: '',
     drafts: [],
-    docs: [
+    tutorials: [
       createSampleDoc({id: 'doc1'}),
       createSampleDoc({id: 'doc2'}),
       createSampleDoc({id: 'doc3'}),
@@ -65,7 +65,7 @@ function createSampleVersion(
       createSampleDoc({id: 'doc5'}),
     ],
     sidebars: {
-      docs: [
+      tutorials: [
         {
           type: 'category',
           label: 'Getting started',

@@ -26,7 +26,7 @@ describe('DefaultSidebarItemsGenerator', () => {
         versionName: 'current',
         contentPath: 'docs',
       },
-      docs: [],
+      tutorials: [],
       categoriesMetadata: {},
       ...params,
     });
@@ -35,7 +35,7 @@ describe('DefaultSidebarItemsGenerator', () => {
   it('generates empty sidebar slice when no docs and emit a warning', async () => {
     const consoleWarn = jest.spyOn(console, 'warn');
     const sidebarSlice = await testDefaultSidebarItemsGenerator({
-      docs: [],
+      tutorials: [],
     });
     expect(sidebarSlice).toEqual([]);
     expect(consoleWarn).toHaveBeenCalledWith(
@@ -56,7 +56,7 @@ describe('DefaultSidebarItemsGenerator', () => {
         versionName: 'current',
         contentPath: '',
       },
-      docs: [
+      tutorials: [
         {
           id: 'doc1',
           source: 'doc1.md',
@@ -141,7 +141,7 @@ describe('DefaultSidebarItemsGenerator', () => {
           },
         },
       },
-      docs: [
+      tutorials: [
         {
           id: 'intro',
           source: '@site/docs/intro.md',
@@ -259,7 +259,7 @@ describe('DefaultSidebarItemsGenerator', () => {
           },
         },
       },
-      docs: [
+      tutorials: [
         {
           id: 'doc1',
           source: 'doc1.md',
@@ -362,7 +362,7 @@ describe('DefaultSidebarItemsGenerator', () => {
           link: null,
         },
       },
-      docs: [
+      tutorials: [
         {
           id: 'parent/doc1',
           source: '@site/docs/Category/index.md',
@@ -440,7 +440,7 @@ describe('DefaultSidebarItemsGenerator', () => {
         contentPath: '',
       },
       categoriesMetadata: {},
-      docs: [
+      tutorials: [
         {
           id: 'intro',
           source: '@site/docs/intro.md',
@@ -532,7 +532,7 @@ describe('DefaultSidebarItemsGenerator', () => {
             },
           },
         },
-        docs: [
+        tutorials: [
           {
             id: 'intro',
             unversionedId: 'intro',

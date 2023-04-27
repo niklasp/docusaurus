@@ -19,11 +19,11 @@ import type {
 } from './client/index';
 import type {Sidebars} from './sidebars/types';
 
-function toGlobalDataDoc(doc: DocMetadata): GlobalDoc {
+function toGlobalDataDoc(tutorial: DocMetadata): GlobalDoc {
   return {
-    id: doc.unversionedId,
-    path: doc.permalink,
-    sidebar: doc.sidebar,
+    id: tutorial.unversionedId,
+    path: tutorial.permalink,
+    sidebar: tutorial.sidebar,
   };
 }
 
@@ -51,9 +51,9 @@ function toGlobalSidebars(
         path:
           firstLink.type === 'generated-index'
             ? firstLink.permalink
-            : version.docs.find(
-                (doc) =>
-                  doc.id === firstLink.id || doc.unversionedId === firstLink.id,
+            : version.tutorials.find(
+                (tutorial) =>
+                  tutorial.id === firstLink.id || tutorial.unversionedId === firstLink.id,
               )!.permalink,
         label: firstLink.label,
       },
@@ -68,7 +68,7 @@ export function toGlobalDataVersion(version: FullVersion): GlobalVersion {
     isLast: version.isLast,
     path: version.path,
     mainDocId: getMainDocId(version),
-    docs: version.docs
+    tutorials: version.tutorials
       .map(toGlobalDataDoc)
       .concat(version.categoryGeneratedIndices.map(toGlobalDataGeneratedIndex)),
     draftIds: version.drafts.map((doc) => doc.unversionedId),

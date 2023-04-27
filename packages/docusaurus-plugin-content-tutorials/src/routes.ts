@@ -124,7 +124,7 @@ export async function createVersionRoutes({
 
     async function createVersionSubRoutes() {
       const [docRoutes, sidebarsRoutes] = await Promise.all([
-        createDocRoutes({docs: version.docs, actions, docItemComponent}),
+        createDocRoutes({docs: version.tutorials, actions, docItemComponent}),
         createCategoryGeneratedIndexRoutes({
           version,
           actions,
