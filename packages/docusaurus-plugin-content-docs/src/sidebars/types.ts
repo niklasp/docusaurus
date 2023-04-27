@@ -24,7 +24,7 @@ export type SidebarItemBase = {
 };
 
 export type SidebarItemDoc = SidebarItemBase & {
-  type: 'doc' | 'ref';
+  type: 'tutorial' | 'ref';
   label?: string;
   id: string;
   /**
@@ -61,7 +61,7 @@ type SidebarItemCategoryBase = SidebarItemBase & {
   description?: string;
 };
 
-export type SidebarItemCategoryLinkDoc = {type: 'doc'; id: string};
+export type SidebarItemCategoryLinkDoc = {type: 'tutorial'; id: string};
 
 export type SidebarItemCategoryLinkGeneratedIndexConfig = {
   type: 'generated-index';

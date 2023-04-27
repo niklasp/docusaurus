@@ -396,7 +396,7 @@ export default async function pluginContentTutorials(
         ],
         resolve: {
           alias: {
-            '~docs': pluginDataDirRoot,
+            '~tutorials': pluginDataDirRoot,
           },
         },
         module: {
