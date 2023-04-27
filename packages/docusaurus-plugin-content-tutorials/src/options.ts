@@ -23,8 +23,8 @@ import type {OptionValidationContext} from '@docusaurus/types';
 import type {PluginOptions, Options} from '@niklasp/plugin-content-tutorials';
 
 export const DEFAULT_OPTIONS: Omit<PluginOptions, 'id' | 'sidebarPath'> = {
-  path: 'docs', // Path to data on filesystem, relative to site dir.
-  routeBasePath: 'docs', // URL Route.
+  path: 'tutorials', // Path to data on filesystem, relative to site dir.
+  routeBasePath: 'tutorials', // URL Route.
   tagsBasePath: 'tags', // URL Tags Route.
   include: ['**/*.{md,mdx}'], // Extensions to include.
   exclude: GlobExcludeDefault,
@@ -39,8 +39,8 @@ export const DEFAULT_OPTIONS: Omit<PluginOptions, 'id' | 'sidebarPath'> = {
   rehypePlugins: [],
   beforeDefaultRemarkPlugins: [],
   beforeDefaultRehypePlugins: [],
-  showLastUpdateTime: false,
-  showLastUpdateAuthor: false,
+  showLastUpdateTime: true,
+  showLastUpdateAuthor: true,
   admonitions: true,
   includeCurrentVersion: true,
   disableVersioning: false,

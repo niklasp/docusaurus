@@ -24,6 +24,12 @@ declare module '@niklasp/plugin-content-tutorials' {
     image?: string;
   };
 
+  export enum TutorialLevel {
+    beginner = 'Beginner',
+    advanced = 'Advanced',
+    expert = 'Expert',
+  }
+
   export type FileChange = {
     author?: string;
     /** Date can be any
@@ -287,7 +293,7 @@ declare module '@niklasp/plugin-content-tutorials' {
     routePriority: number | undefined;
   };
 
-  export type DocFrontMatter = {
+  export type TutorialFrontMatter = {
     /**
      * The last part of the doc ID (will be refactored in the future to be the
      * full ID instead)
@@ -386,6 +392,12 @@ declare module '@niklasp/plugin-content-tutorials' {
     draft?: boolean;
     /** Allows overriding the last updated author and/or date. */
     last_update?: FileChange;
+
+    /** How long does the tutorial take to complete */
+    duration?: string | null;
+
+    /** Level of the tutorial */
+    level?: TutorialLevel | undefined | null;
   };
 
   export type LastUpdateData = {
@@ -448,7 +460,9 @@ declare module '@niklasp/plugin-content-tutorials' {
     /** Tags, normalized. */
     tags: Tag[];
     /** Front matter, as-is. */
-    frontMatter: DocFrontMatter & {[key: string]: unknown};
+    frontMatter: TutorialFrontMatter & {[key: string]: unknown};
+    duration: string | null | undefined;
+    level: string | null | undefined;
   };
 
   export type DocMetadata = DocMetadataBase &
@@ -498,7 +512,7 @@ declare module '@niklasp/plugin-content-tutorials' {
   };
 
   export type PropDocContent = LoadedMDXContent<
-    DocFrontMatter,
+    TutorialFrontMatter,
     DocMetadata,
     Assets
   >;

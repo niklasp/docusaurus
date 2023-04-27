@@ -6,15 +6,15 @@
  */
 
 import {escapeRegexp} from '@docusaurus/utils';
-import {validateDocFrontMatter} from '../frontMatter';
-import type {DocFrontMatter} from '@niklasp/plugin-content-tutorials';
+import {validateTutorialFrontMatter} from '../frontMatter';
+import type {TutorialFrontMatter} from '@niklasp/plugin-content-tutorials';
 
 function testField(params: {
   prefix: string;
-  validFrontMatters: DocFrontMatter[];
+  validFrontMatters: TutorialFrontMatter[];
   convertibleFrontMatter?: [
     ConvertibleFrontMatter: {[key: string]: unknown},
-    ConvertedFrontMatter: DocFrontMatter,
+    ConvertedFrontMatter: TutorialFrontMatter,
   ][];
   invalidFrontMatters?: [
     InvalidFrontMatter: {[key: string]: unknown},
@@ -24,7 +24,7 @@ function testField(params: {
   // eslint-disable-next-line jest/require-top-level-describe
   test(`[${params.prefix}] accept valid values`, () => {
     params.validFrontMatters.forEach((frontMatter) => {
-      expect(validateDocFrontMatter(frontMatter)).toEqual(frontMatter);
+      expect(validateTutorialFrontMatter(frontMatter)).toEqual(frontMatter);
     });
   });
 
@@ -32,7 +32,7 @@ function testField(params: {
   test(`[${params.prefix}] convert valid values`, () => {
     params.convertibleFrontMatter?.forEach(
       ([convertibleFrontMatter, convertedFrontMatter]) => {
-        expect(validateDocFrontMatter(convertibleFrontMatter)).toEqual(
+        expect(validateTutorialFrontMatter(convertibleFrontMatter)).toEqual(
           convertedFrontMatter,
         );
       },
@@ -43,7 +43,7 @@ function testField(params: {
   test(`[${params.prefix}] throw error for values`, () => {
     params.invalidFrontMatters?.forEach(([frontMatter, message]) => {
       try {
-        validateDocFrontMatter(frontMatter);
+        validateTutorialFrontMatter(frontMatter);
         // eslint-disable-next-line jest/no-jasmine-globals
         fail(
           new Error(
@@ -66,17 +66,17 @@ function testField(params: {
 
 describe('doc front matter schema', () => {
   it('accepts empty object', () => {
-    const frontMatter: DocFrontMatter = {};
-    expect(validateDocFrontMatter(frontMatter)).toEqual(frontMatter);
+    const frontMatter: TutorialFrontMatter = {};
+    expect(validateTutorialFrontMatter(frontMatter)).toEqual(frontMatter);
   });
 
   it('accepts unknown field', () => {
     const frontMatter = {abc: '1'};
-    expect(validateDocFrontMatter(frontMatter)).toEqual(frontMatter);
+    expect(validateTutorialFrontMatter(frontMatter)).toEqual(frontMatter);
   });
 });
 
-describe('validateDocFrontMatter id', () => {
+describe('validateTutorialFrontMatter id', () => {
   testField({
     prefix: 'id',
     validFrontMatters: [{id: '123'}, {id: 'unique_id'}],
@@ -84,7 +84,7 @@ describe('validateDocFrontMatter id', () => {
   });
 });
 
-describe('validateDocFrontMatter title', () => {
+describe('validateTutorialFrontMatter title', () => {
   testField({
     prefix: 'title',
     validFrontMatters: [
@@ -95,7 +95,7 @@ describe('validateDocFrontMatter title', () => {
   });
 });
 
-describe('validateDocFrontMatter hide_title', () => {
+describe('validateTutorialFrontMatter hide_title', () => {
   testField({
     prefix: 'hide_title',
     validFrontMatters: [{hide_title: true}, {hide_title: false}],
@@ -111,7 +111,7 @@ describe('validateDocFrontMatter hide_title', () => {
   });
 });
 
-describe('validateDocFrontMatter hide_table_of_contents', () => {
+describe('validateTutorialFrontMatter hide_table_of_contents', () => {
   testField({
     prefix: 'hide_table_of_contents',
     validFrontMatters: [
@@ -130,7 +130,7 @@ describe('validateDocFrontMatter hide_table_of_contents', () => {
   });
 });
 
-describe('validateDocFrontMatter keywords', () => {
+describe('validateTutorialFrontMatter keywords', () => {
   testField({
     prefix: 'keywords',
     validFrontMatters: [
@@ -147,7 +147,7 @@ describe('validateDocFrontMatter keywords', () => {
   });
 });
 
-describe('validateDocFrontMatter image', () => {
+describe('validateTutorialFrontMatter image', () => {
   testField({
     prefix: 'image',
     validFrontMatters: [
@@ -161,7 +161,7 @@ describe('validateDocFrontMatter image', () => {
   });
 });
 
-describe('validateDocFrontMatter description', () => {
+describe('validateTutorialFrontMatter description', () => {
   testField({
     prefix: 'description',
     validFrontMatters: [
@@ -172,7 +172,7 @@ describe('validateDocFrontMatter description', () => {
   });
 });
 
-describe('validateDocFrontMatter slug', () => {
+describe('validateTutorialFrontMatter slug', () => {
   testField({
     prefix: 'slug',
     validFrontMatters: [
@@ -189,7 +189,7 @@ describe('validateDocFrontMatter slug', () => {
   });
 });
 
-describe('validateDocFrontMatter sidebar_label', () => {
+describe('validateTutorialFrontMatter sidebar_label', () => {
   testField({
     prefix: 'sidebar_label',
     validFrontMatters: [{sidebar_label: 'Awesome docs'}],
@@ -197,7 +197,7 @@ describe('validateDocFrontMatter sidebar_label', () => {
   });
 });
 
-describe('validateDocFrontMatter sidebar_position', () => {
+describe('validateTutorialFrontMatter sidebar_position', () => {
   testField({
     prefix: 'sidebar_position',
     validFrontMatters: [
@@ -215,7 +215,7 @@ describe('validateDocFrontMatter sidebar_position', () => {
   });
 });
 
-describe('validateDocFrontMatter sidebar_custom_props', () => {
+describe('validateTutorialFrontMatter sidebar_custom_props', () => {
   testField({
     prefix: 'sidebar_custom_props',
     validFrontMatters: [
@@ -228,7 +228,7 @@ describe('validateDocFrontMatter sidebar_custom_props', () => {
   });
 });
 
-describe('validateDocFrontMatter custom_edit_url', () => {
+describe('validateTutorialFrontMatter custom_edit_url', () => {
   testField({
     prefix: 'custom_edit_url',
     validFrontMatters: [
@@ -242,7 +242,7 @@ describe('validateDocFrontMatter custom_edit_url', () => {
   });
 });
 
-describe('validateDocFrontMatter parse_number_prefixes', () => {
+describe('validateTutorialFrontMatter parse_number_prefixes', () => {
   testField({
     prefix: 'parse_number_prefixes',
     validFrontMatters: [
@@ -261,7 +261,7 @@ describe('validateDocFrontMatter parse_number_prefixes', () => {
   });
 });
 
-describe('validateDocFrontMatter tags', () => {
+describe('validateTutorialFrontMatter tags', () => {
   testField({
     prefix: 'tags',
     validFrontMatters: [{}, {tags: undefined}, {tags: ['tag1', 'tag2']}],
@@ -381,7 +381,7 @@ describe('toc min/max consistency', () => {
   });
 });
 
-describe('validateDocFrontMatter draft', () => {
+describe('validateTutorialFrontMatter draft', () => {
   testField({
     prefix: 'draft',
     validFrontMatters: [{draft: true}, {draft: false}],
@@ -397,7 +397,7 @@ describe('validateDocFrontMatter draft', () => {
   });
 });
 
-describe('validateDocFrontMatter last_update', () => {
+describe('validateTutorialFrontMatter last_update', () => {
   testField({
     prefix: 'last_update',
     validFrontMatters: [

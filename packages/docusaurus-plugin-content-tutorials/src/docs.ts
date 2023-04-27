@@ -24,9 +24,9 @@ import {getFileLastUpdate} from './lastUpdate';
 import getSlug from './slug';
 import {CURRENT_VERSION_NAME} from './constants';
 import {stripPathNumberPrefixes} from './numberPrefix';
-import {validateDocFrontMatter} from './frontMatter';
+import {validateTutorialFrontMatter} from './frontMatter';
 import {toDocNavigationLink, toNavigationLink} from './sidebars/utils';
-import type {
+import {
   MetadataOptions,
   PluginOptions,
   CategoryIndexMatcher,
@@ -35,9 +35,10 @@ import type {
   PropNavigationLink,
   LastUpdateData,
   VersionMetadata,
-  DocFrontMatter,
+  TutorialFrontMatter,
   LoadedVersion,
   FileChange,
+  TutorialLevel,
 } from '@niklasp/plugin-content-tutorials';
 import type {LoadContext} from '@docusaurus/types';
 import type {SidebarsUtils} from './sidebars/utils';
@@ -130,7 +131,7 @@ function isDraftForEnvironment({
   env,
   frontMatter,
 }: {
-  frontMatter: DocFrontMatter;
+  frontMatter: TutorialFrontMatter;
   env: DocEnv;
 }): boolean {
   return (env === 'production' && frontMatter.draft) ?? false;
@@ -157,7 +158,7 @@ async function doProcessDocMetadata({
     contentTitle,
     excerpt,
   } = parseMarkdownString(content);
-  const frontMatter = validateDocFrontMatter(unsafeFrontMatter);
+  const frontMatter = validateTutorialFrontMatter(unsafeFrontMatter);
 
   const {
     custom_edit_url: customEditURL,
@@ -242,6 +243,10 @@ async function doProcessDocMetadata({
 
   const description: string = frontMatter.description ?? excerpt ?? '';
 
+  const level: string = frontMatter.level ?? 'Beginner';
+
+  const duration: string | undefined | null = frontMatter.duration;
+
   const permalink = normalizeUrl([versionMetadata.path, docSlug]);
 
   function getDocEditUrl() {
@@ -294,6 +299,8 @@ async function doProcessDocMetadata({
     id,
     title,
     description,
+    duration,
+    level,
     source: aliasedSitePath(filePath, siteDir),
     sourceDirName,
     slug: docSlug,

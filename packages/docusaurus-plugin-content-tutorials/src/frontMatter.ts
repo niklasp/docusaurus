@@ -12,7 +12,7 @@ import {
   FrontMatterTOCHeadingLevels,
   validateFrontMatter,
 } from '@docusaurus/utils-validation';
-import type {DocFrontMatter} from '@niklasp/plugin-content-tutorials';
+import type {TutorialFrontMatter} from '@niklasp/plugin-content-tutorials';
 
 const FrontMatterLastUpdateErrorMessage =
   '{{#label}} does not look like a valid front matter FileChange object. Please use a FileChange object (with an author and/or date).';
@@ -21,7 +21,7 @@ const FrontMatterLastUpdateErrorMessage =
 // We don't want default values to magically appear in doc metadata and props
 // While the user did not provide those values explicitly
 // We use default values in code instead
-const DocFrontMatterSchema = Joi.object<DocFrontMatter>({
+const TutorialFrontMatterSchema = Joi.object<TutorialFrontMatter>({
   id: Joi.string(),
   // See https://github.com/facebook/docusaurus/issues/4591#issuecomment-822372398
   title: Joi.string().allow(''),
@@ -56,8 +56,8 @@ const DocFrontMatterSchema = Joi.object<DocFrontMatter>({
     }),
 }).unknown();
 
-export function validateDocFrontMatter(frontMatter: {
+export function validateTutorialFrontMatter(frontMatter: {
   [key: string]: unknown;
-}): DocFrontMatter {
-  return validateFrontMatter(frontMatter, DocFrontMatterSchema);
+}): TutorialFrontMatter {
+  return validateFrontMatter(frontMatter, TutorialFrontMatterSchema);
 }

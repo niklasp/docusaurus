@@ -5,10 +5,83 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import _ from 'lodash';
-import {groupTaggedItems} from '@docusaurus/utils';
+import _, {pick} from 'lodash';
+import {groupBy} from 'lodash';
+import {Tag, groupTaggedItems} from '@docusaurus/utils';
 import type {VersionTags} from './types';
 import type {DocMetadata} from '@niklasp/plugin-content-tutorials';
+
+type TaggedItemGroup<Item> = {
+  tag: Tag;
+  items: Item[];
+};
+
+/**
+ * Permits to group docs/blog posts by tag (provided by front matter).
+ *
+ * @returns a map from tag permalink to the items and other relevant tag data.
+ * The record is indexed by permalink, because routes must be unique in the end.
+ * Labels may vary on 2 MD files but they are normalized. Docs with
+ * label='some label' and label='some-label' should end up in the same page.
+ */
+export function groupTaggedItemsByLabel<Item>(
+  items: readonly Item[],
+  /**
+   * A callback telling me how to get the tags list of the current item. Usually
+   * simply getting it from some metadata of the current item.
+   */
+  getItemTags: (item: Item) => readonly Tag[],
+): {[permalink: string]: TaggedItemGroup<Item | Partial<Item>>} {
+  const result: {[permalink: string]: TaggedItemGroup<Item | Partial<Item>>} =
+    {};
+
+  items.forEach((item) => {
+    getItemTags(item).forEach((tag) => {
+      // Init missing tag groups
+      // TODO: it's not really clear what should be the behavior if 2 tags have
+      // the same permalink but the label is different for each
+      // For now, the first tag found wins
+      result[tag.label] ??= {
+        tag,
+        items: [],
+      };
+
+      // Add item to group
+      console.log('item', item);
+      result[tag.label]!.items.push(
+        // item,
+        {
+          ...pick(item, [
+            'title',
+            'description',
+            'permalink',
+            'tags',
+            'lastUpdatedAt',
+            'level',
+            'duration',
+          ]),
+        },
+        // pick(item, [
+        //   'frontMatter',
+        //   'frontMatter.tags',
+        //   'frontMatter.description',
+        //   'frontMatter.duration',
+        //   'frontMatter.level',
+        //   'frontMatter.updated',
+        //   'frontMatter.title',
+        // ]),
+      );
+    });
+  });
+
+  // If user add twice the same tag to a md doc (weird but possible),
+  // we don't want the item to appear twice in the list...
+  Object.values(result).forEach((group) => {
+    group.items = _.uniq(group.items);
+  });
+
+  return result;
+}
 
 export function getVersionTags(tutorials: DocMetadata[]): VersionTags {
   const groups = groupTaggedItems(tutorials, (tutorial) => tutorial.tags);
@@ -18,3 +91,81 @@ export function getVersionTags(tutorials: DocMetadata[]): VersionTags {
     permalink: group.tag.permalink,
   }));
 }
+
+export function getTaggedTutorials(tutorials: DocMetadata[]): any {
+  // console.log( 'all tutorials we got', tutorials )
+  const groups = groupTaggedItemsByLabel(
+    tutorials,
+    (tutorial) => tutorial.tags,
+  );
+
+  console.log('groups', groups);
+  return groups;
+}
+
+// [
+//   {
+//     unversionedId: 'START',
+//     id: 'START',
+//     title: 'hello tutorial',
+//     description: 'Learn how to write your tutorial on polkadot.study',
+//     source: '@site/tutorials/START.md',
+//     sourceDirName: '.',
+//     slug: '/START',
+//     permalink: '/tutorials/START',
+//     draft: false,
+//     editUrl: undefined,
+//     tags: [ [Object], [Object] ],
+//     version: 'current',
+//     lastUpdatedBy: undefined,
+//     lastUpdatedAt: undefined,
+//     formattedLastUpdatedAt: undefined,
+//     sidebarPosition: undefined,
+//     frontMatter: {
+//       tags: [Array],
+//       keywords: [Array],
+//       description: 'Learn how to write your tutorial on polkadot.study',
+//       image: 'https://i.imgur.com/mErPwqL.png',
+//       updated: 2023-02-12T00:00:00.000Z
+//     },
+//     sidebar: 'defaultSidebar',
+//     previous: undefined,
+//     next: {
+//       title: 'setup',
+//       permalink: '/tutorials/tokengated-website/setup'
+//     }
+//   },
+//   {
+//     unversionedId: 'tokengated-website/intro',
+//     id: 'tokengated-website/intro',
+//     title: 'Tokengated Website Tutorial with Polkadot and nextjs',
+//     description: 'Learn how to write a tokengated website with polkadot and next.js',
+//     source: '@site/tutorials/tokengated-website/intro.md',
+//     sourceDirName: 'tokengated-website',
+//     slug: '/tokengated-website/intro',
+//     permalink: '/tutorials/tokengated-website/intro',
+//     draft: false,
+//     editUrl: undefined,
+//     tags: [ [Object], [Object] ],
+//     version: 'current',
+//     lastUpdatedBy: undefined,
+//     lastUpdatedAt: undefined,
+//     formattedLastUpdatedAt: undefined,
+//     sidebarPosition: undefined,
+//     frontMatter: {
+//       tags: [Array],
+//       keywords: [Array],
+//       description: 'Learn how to write a tokengated website with polkadot and next.js',
+//       image: 'https://i.imgur.com/mErPwqL.png',
+//       updated: 2023-02-12T00:00:00.000Z
+//     },
+//     sidebar: 'defaultSidebar',
+//     previous: {
+//       title: 'part 1',
+//       permalink: '/tutorials/tokengated-website/part1'
+//     },
+//     next: {
+//       title: 'hello tutorial',
+//       permalink: '/tutorials/tutorial-2/hello'
+//     }
+//   },

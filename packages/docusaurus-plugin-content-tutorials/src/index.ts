@@ -37,7 +37,7 @@ import {
   translateLoadedContent,
   getLoadedContentTranslationFiles,
 } from './translations';
-import {getVersionTags} from './tags';
+import {getTaggedTutorials, getVersionTags} from './tags';
 import {createVersionRoutes} from './routes';
 import {createSidebarsUtils} from './sidebars/utils';
 
@@ -46,7 +46,7 @@ import type {
   PluginOptions,
   DocMetadataBase,
   VersionMetadata,
-  DocFrontMatter,
+  TutorialFrontMatter,
   LoadedContent,
   LoadedVersion,
 } from '@niklasp/plugin-content-tutorials';
@@ -65,6 +65,8 @@ export default async function pluginContentTutorials(
   options: PluginOptions,
 ): Promise<Plugin<LoadedContent>> {
   const {siteDir, generatedFilesDir, baseUrl, siteConfig} = context;
+
+  console.log( 'siteConfig', siteConfig )
   // Mutate options to resolve sidebar path according to siteDir
   options.sidebarPath = resolveSidebarPathOption(siteDir, options.sidebarPath);
 
@@ -229,6 +231,8 @@ export default async function pluginContentTutorials(
         };
       });
 
+      console.log( 'contentLoaded', content )
+
       async function createVersionTagsRoutes(version: FullVersion) {
         const versionTags = getVersionTags(version.tutorials);
 
@@ -301,10 +305,17 @@ export default async function pluginContentTutorials(
       // TODO tags should be a sub route of the version route
       await Promise.all(versions.map(createVersionTagsRoutes));
 
+      let versionTags: any = []
+
+      if ( versions[0] !== undefined ) {
+        versionTags = getTaggedTutorials(versions[0].tutorials)
+      }
+
       setGlobalData({
         path: normalizeUrl([baseUrl, options.routeBasePath]),
         versions: versions.map(toGlobalDataVersion),
         breadcrumbs,
+        tags: versionTags,
       });
     },
 
@@ -372,7 +383,7 @@ export default async function pluginContentTutorials(
                 createAssets: ({
                   frontMatter,
                 }: {
-                  frontMatter: DocFrontMatter;
+                  frontMatter: TutorialFrontMatter;
                 }) => ({
                   image: frontMatter.image,
                 }),
